@@ -63,8 +63,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: mrbardia72
+          password: ${{ secrets.PAT_TOKEN }}
 
       - name: 🏷️ Extract metadata
         id: meta
@@ -126,7 +126,7 @@ jobs:
             chmod +x scripts/*.sh
 
             # Login to GitHub Container Registry
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+            echo "${{ secrets.PAT_TOKEN }}" | docker login ${{ env.REGISTRY }} -u mrbardia72 --password-stdin
 
             # Pull latest image
             docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
