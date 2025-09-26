@@ -14,7 +14,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 APP_NAME="cicd360"
-DEPLOY_USER="deploy"
+DEPLOY_USER="root"
 DEPLOY_DIR="/opt/${APP_NAME}"
 LOG_DIR="/var/log/${APP_NAME}"
 

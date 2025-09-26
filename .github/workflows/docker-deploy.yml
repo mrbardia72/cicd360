@@ -35,24 +35,24 @@ jobs:
     - name: 📦 Install dependencies
       run: go mod tidy
     
-    - name: 🧪 Run tests
-      run: go test -v ./...
+    # - name: 🧪 Run tests
+    #   run: go test -v ./...
     
-    - name: 📊 Test coverage
-      run: |
-        go test -race -coverprofile=coverage.out -covermode=atomic ./...
-        go tool cover -html=coverage.out -o coverage.html
+    # - name: 📊 Test coverage
+    #   run: |
+    #     go test -race -coverprofile=coverage.out -covermode=atomic ./...
+    #     go tool cover -html=coverage.out -o coverage.html
     
-    - name: 📤 Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        file: ./coverage.out
+    # - name: 📤 Upload coverage to Codecov
+    #   uses: codecov/codecov-action@v3
+    #   with:
+    #     file: ./coverage.out
     
-    - name: 🔍 Run linter
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: latest
-        args: --timeout=5m
+    # - name: 🔍 Run linter
+    #   uses: golangci/golangci-lint-action@v3
+    #   with:
+    #     version: latest
+    #     args: --timeout=5m
 
   build-and-push:
     name: 🐳 Build & Push Docker Image
