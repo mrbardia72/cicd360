@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/mrbardia72/cicd360:latest
+    image: mrbardia72/cicd360:latest
     container_name: cicd360
     restart: unless-stopped
     ports:
