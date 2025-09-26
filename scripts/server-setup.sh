@@ -50,7 +50,7 @@ update_system() {
     if command -v apt-get &> /dev/null; then
         # Ubuntu/Debian
         apt-get update -y
-        apt-get upgrade -y
+        # apt-get upgrade -y
         apt-get install -y curl wget git unzip software-properties-common
     elif command -v yum &> /dev/null; then
         # CentOS/RHEL
@@ -69,49 +69,49 @@ update_system() {
 }
 
 # Install Docker
-install_docker() {
-    log "Installing Docker..."
+# install_docker() {
+#     log "Installing Docker..."
 
-    if command -v docker &> /dev/null; then
-        log_warning "Docker is already installed"
-        docker --version
-    else
-        # Download and install Docker
-        curl -fsSL https://get.docker.com -o get-docker.sh
-        sh get-docker.sh
-        rm get-docker.sh
+#     if command -v docker &> /dev/null; then
+#         log_warning "Docker is already installed"
+#         docker --version
+#     else
+#         # Download and install Docker
+#         curl -fsSL https://get.docker.com -o get-docker.sh
+#         sh get-docker.sh
+#         rm get-docker.sh
 
-        # Start and enable Docker service
-        systemctl start docker
-        systemctl enable docker
+#         # Start and enable Docker service
+#         systemctl start docker
+#         systemctl enable docker
 
-        log_success "Docker installed successfully"
-        docker --version
-    fi
-}
+#         log_success "Docker installed successfully"
+#         docker --version
+#     fi
+# }
 
 # Install Docker Compose
-install_docker_compose() {
-    log "Installing Docker Compose..."
+# install_docker_compose() {
+#     log "Installing Docker Compose..."
 
-    if command -v docker-compose &> /dev/null; then
-        log_warning "Docker Compose is already installed"
-        docker-compose --version
-    else
-        # Get latest version
-        DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+#     if command -v docker-compose &> /dev/null; then
+#         log_warning "Docker Compose is already installed"
+#         docker-compose --version
+#     else
+#         # Get latest version
+#         DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 
-        # Download and install
-        curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-        chmod +x /usr/local/bin/docker-compose
+#         # Download and install
+#         curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+#         chmod +x /usr/local/bin/docker-compose
 
-        # Create symlink for easier access
-        ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
+#         # Create symlink for easier access
+#         ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-        log_success "Docker Compose installed successfully"
-        docker-compose --version
-    fi
-}
+#         log_success "Docker Compose installed successfully"
+#         docker-compose --version
+#     fi
+# }
 
 # Create deployment user
 create_deploy_user() {
@@ -211,20 +211,20 @@ configure_firewall() {
 }
 
 # Install additional tools
-install_tools() {
-    log "Installing additional tools..."
+# install_tools() {
+#     log "Installing additional tools..."
 
-    # Install useful tools
-    if command -v apt-get &> /dev/null; then
-        apt-get install -y htop nano vim curl wget jq netcat-openbsd
-    elif command -v yum &> /dev/null; then
-        yum install -y htop nano vim curl wget jq nc
-    elif command -v dnf &> /dev/null; then
-        dnf install -y htop nano vim curl wget jq nc
-    fi
+#     # Install useful tools
+#     if command -v apt-get &> /dev/null; then
+#         apt-get install -y htop nano vim curl wget jq netcat-openbsd
+#     elif command -v yum &> /dev/null; then
+#         yum install -y htop nano vim curl wget jq nc
+#     elif command -v dnf &> /dev/null; then
+#         dnf install -y htop nano vim curl wget jq nc
+#     fi
 
-    log_success "Additional tools installed"
-}
+#     log_success "Additional tools installed"
+# }
 
 # Setup log rotation
 setup_log_rotation() {
@@ -338,13 +338,13 @@ main() {
 
     check_root
     update_system
-    install_docker
-    install_docker_compose
+    # install_docker
+    # install_docker_compose
     create_deploy_user
     setup_ssh
     create_app_directories
     configure_firewall
-    install_tools
+    # install_tools
     setup_log_rotation
     create_systemd_service
     security_hardening
