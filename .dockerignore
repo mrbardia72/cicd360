@@ -1,0 +1,13 @@
+.git
+.github
+*.md
+.env
+.env.local
+.gitignore
+Dockerfile
+docker-compose.yml
+scripts/
+*.log
+tmp/
+vendor/
+.DS_Store

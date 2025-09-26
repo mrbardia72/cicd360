@@ -1,0 +1,80 @@
+services:
+  app:
+    image: cicd360:1.0.0
+    container_name: cicd360
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - ENVIRONMENT=production
+      - APP_NAME=CICD360
+    networks:
+      - cicd360-network
+    volumes:
+      - app-logs:/var/log/cicd360
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: "0.5"
+        reservations:
+          memory: 128M
+          cpus: "0.25"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: cicd360-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx-logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - cicd360-network
+    profiles:
+      - with-nginx
+
+  # Optional: Prometheus monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: cicd360-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - cicd360-network
+    profiles:
+      - monitoring
+
+networks:
+  cicd360-network:
+    driver: bridge
+    name: cicd360-network
+
+volumes:
+  app-logs:
+    name: cicd360-app-logs
+  nginx-logs:
+    name: cicd360-nginx-logs
+  prometheus-data:
+    name: cicd360-prometheus-data
