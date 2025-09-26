@@ -13,9 +13,11 @@ COPY . .
 # 📦 Download dependencies
 RUN go mod download && go mod tidy
 
+
 # 🏗️ Build arguments
 ARG VERSION=dev
 ARG BUILD_TIME=unknown
+
 
 # 🏗️ Build the application with optimizations
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build \
