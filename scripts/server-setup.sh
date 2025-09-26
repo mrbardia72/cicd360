@@ -51,7 +51,7 @@ update_system() {
         # Ubuntu/Debian
         apt-get update -y
         # apt-get upgrade -y
-        apt-get install -y curl wget git unzip software-properties-common
+        # apt-get install -y curl wget git unzip software-properties-common
     elif command -v yum &> /dev/null; then
         # CentOS/RHEL
         yum update -y
